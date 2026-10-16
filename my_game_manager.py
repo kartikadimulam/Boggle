@@ -75,7 +75,7 @@ class MyGameManager(BoggleGame):
         if not word:
             return None
 
-        # start with a one-cell path for every cell matching the first letter
+        # start with path for every cell matching the first letter
         stack = []
         for r in range(self.size):
             for c in range(self.size):
@@ -143,7 +143,6 @@ class MyGameManager(BoggleGame):
         for word in self.dictionary:
             if len(word) > SHORT:
                 word = word.lower()
-                # start with a one-cell path for every cell matching the first letter
                 stack = []
                 for r in range(self.size):
                     for c in range(self.size):
@@ -186,12 +185,12 @@ class MyGameManager(BoggleGame):
 
         while stack:
             path = stack.pop()
-            word = "".join(self.board[pr][pc] for pr, pc in path)  # word for THIS path
+            word = "".join(self.board[pr][pc] for pr, pc in path)  # word for current path
 
             if not self.dictionary.is_prefix(word):  # dead end: no word starts this way
                 continue
             if len(word) > SHORT and self.dictionary.contains(word):
-                wordset.add(word)  # record it, but keep searching
+                wordset.add(word)  # record it but keep searching
 
             r, c = path[-1]
             for dr in (-1, 0, 1):
